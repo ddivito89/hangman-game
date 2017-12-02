@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <title>hangman_DD</title>
+</head>
+<body>
+  <div id="hint">
+  </div>
+  <br />
+  <div id="word">
+  </div>
+  <br />
+  <div id="status">
+  </div>
+  <br />
+  <div id="badGuess">
+  </div>
+  <br />
+  <div id="score">
+  </div>
+  <script>
+    //Define page variables
+    var games = [{
+      hint: "Extinct Reptile",
+      answer: "dinosaur"
+    }, {
+      hint: "big eared mammal",
+      answer: "elephant"
+    }, {
+      hint: "famous city in france",
+      answer: "Paris"
+    }, {
+      hint: "capital of Illinois",
+      answer: "Springfield"
+    }, {
+      hint: "first planet in solar system",
+      answer: "Mercury"
+    }];
+
+    //declare game variables and functions
+
+    newGame(0, 0, 0)
+
+    function newGame(x, wins, losses) {
+      var wordHint = games[x].hint
+      var word = games[x].answer
+      var letterArray = []
+      var guessArray = []
+      var wrongArray = []
+      var gameOver = false;
+      var guessesRemaining = 5;
+
+
+      var hintDiv = document.getElementById("hint");
+      var wordDiv = document.getElementById("word");
+      var statusDiv = document.getElementById("status");
+      var badGuessDiv = document.getElementById("badGuess");
+      var scoreDiv = document.getElementById("score");
+
+
+      function isLetter(str) {
+        return str.length === 1 && str.match(/[a-z]/i);
+      }
+
+      for (var i = 0; i < word.length; i++) {
+        letterArray.push(word.charAt(i));
+        guessArray.push("-");
+      }
+
+      hintDiv.innerHTML = wordHint;
+      wordDiv.innerHTML = guessArray;
+      statusDiv.innerHTML = (guessesRemaining + " guesses left");
+      scoreDiv.innerHTML = ("Wins: " + wins + "   Losses: " + losses);
+      badGuessDiv.innerHTML = ("bad guesses: ");
+
+
+      //GUESSING GAME
+      document.onkeyup = function(event) {
+        if (guessesRemaining > 0) {
+
+          var userGuess = event.key.toLowerCase();
+
+          if (isLetter(userGuess)) {
+            var guessValid = false;
+            if (letterArray.indexOf(userGuess) > -1 || letterArray.indexOf(userGuess.toUpperCase()) > -1) {
+              for (i = 0; i < letterArray.length; i++) {
+                if (letterArray[i] === userGuess) {
+                  guessArray[i] = userGuess;
+                } else if (letterArray[i] === userGuess.toUpperCase()) {
+                  guessArray[i] = userGuess.toUpperCase();
+                }
+                wordDiv.innerHTML = guessArray;
+              }
+              //see if game over as and declare
+              if (guessArray.indexOf("-") === -1) {
+                wins++;
+                gameOver = true;
+                alert("YOU WIN! Answer is " + word);
+              }
+            } else {
+              if (wrongArray.indexOf(userGuess) === -1) {
+                guessesRemaining--;
+                wrongArray.push(userGuess)
+                if (guessesRemaining === 0) {
+                  losses++;
+                  gameOver = true;
+                  alert("YOU LOSE! Answer was " + word);
+
+                } else {
+                  badGuessDiv.innerHTML = ("bad guesses: " + wrongArray);
+                  statusDiv.innerHTML = (guessesRemaining + " guesses left");
+                }
+              }
+            }
+          }
+        }
+        if (gameOver === true) {
+          x++;
+          if (x > games.length -1){
+            alert("OUT OF PUZZLES.  GAME RESETTING");
+            newGame(0, 0, 0);
+          }else{
+            newGame(x, wins, losses);
+          }
+        }
+      }
+    };
+  </script>
+
+</body>
+
+</html>

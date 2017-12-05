@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=MedievalSharp');
+
+body {
+  font-family: 'MedievalSharp', cursive;
+  margin: 0;
+  background-image: url("../images/main.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100%;
+  color:white;
+  font-size:20px;
+}
+
+.container{
+}
+
+.topRow{
+  min-height: 200px;
+  height:50vh;
+}
+
+.bottomRow{
+  min-height: 200px;
+  height:50vh;
+  align-items: flex-end;
+}
+.myTitle{
+  margin-top: 20px;
+  font-size:60px;
+  background-color:grey;
+}
+
+.myContent{
+  background-color:black;
+  margin-bottom: 20px;
+}

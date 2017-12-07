@@ -13,9 +13,10 @@ var games = [
     hint: "A Dothraki Queen",
     answer: "Khaleesi"
   }, {
-    hint: "This family always pays their debts",
-    answer: "Lannister"
+    hint: "This region has the best wine",
+    answer: "Dorne"
   }
+
 ];
 
 document.onkeydown = function(event) {
